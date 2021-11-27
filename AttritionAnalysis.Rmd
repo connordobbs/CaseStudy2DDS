@@ -422,6 +422,9 @@ bar_plot_check(OverTime, Attrition)
 * By Job Level
     + Each job level is correlated with an increase in income, as expected
 
+* Attrition Significance
+    + P value < .001 that log Monthly Income is different between those who stay and leave
+
 ```{r}
 hrdf %>% ggplot(aes(x = Department, y = MonthlyIncome, fill = Department)) +
   geom_boxplot(alpha = .7) + geom_hline(aes(yintercept = median(MonthlyIncome), color = 'red')) +
@@ -430,6 +433,9 @@ hrdf %>% ggplot(aes(x = Department, y = MonthlyIncome, fill = Department)) +
 hrdf %>% ggplot(aes(x = JobLevel, y = MonthlyIncome, fill = JobLevel)) +
   geom_boxplot(alpha = .7) + geom_hline(aes(yintercept = median(MonthlyIncome), color = 'red')) +
   theme_stata() + scale_fill_stata()
+
+hrdf$logIncome <- log(hrdf$MonthlyIncome)
+t.test(logIncome ~ Attrition, data = hrdf)
 ```
 
 ---
